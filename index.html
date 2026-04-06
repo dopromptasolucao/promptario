@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#00ae9d">
+<title>PROMPTÁRIO</title>
+<link rel="manifest" href="manifest.json">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--primary:#00ae9d;--dark:#003641;--white:#ffffff;--bg:#f7f8f9;
+--gray-light:#f0f1f3;--gray-mid:#e0e2e5;--gray-text:#6b7280;
+--radius:16px;--radius-sm:10px;
+--shadow:0 2px 12px rgba(0,54,65,0.07);
+--shadow-hover:0 4px 20px rgba(0,54,65,0.12);
+--max-w:680px;
+}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-Light.ttf') format('truetype');font-weight:300}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-Regular.ttf') format('truetype');font-weight:400}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-Medium.ttf') format('truetype');font-weight:500}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-SemiBold.ttf') format('truetype');font-weight:600}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-Bold.ttf') format('truetype');font-weight:700}
+@font-face{font-family:'SS';src:url('fonts/SicoobSans-ExtraBold.ttf') format('truetype');font-weight:800}
+body{font-family:'SS',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--dark);line-height:1.6;font-weight:400;font-size:16px;-webkit-font-smoothing:antialiased}
+.page{display:none;min-height:100vh;padding-bottom:40px}
+.page.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.container{width:100%;max-width:var(--max-w);margin:0 auto;padding:20px 20px 40px}
+.page-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:24px}
+.back-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--gray-light);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--dark);flex-shrink:0;transition:background .2s;margin-top:4px}
+.back-btn:hover{background:var(--gray-mid)}
+.page-header-text{flex:1}
+.page-title{font-size:1.5rem;font-weight:700;color:var(--dark);line-height:1.3}
+.page-subtitle{font-size:0.9rem;color:var(--gray-text);margin-top:4px;line-height:1.5}
+.intro-block{background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:20px;border-left:4px solid var(--primary)}
+.intro-title{font-size:1rem;font-weight:600;margin-bottom:8px;color:var(--dark)}
+.intro-text{font-size:0.9rem;color:var(--gray-text);line-height:1.6}
+.intro-small{font-size:0.8rem;color:var(--gray-text);margin-top:12px;opacity:0.7}
+.accordion-card{background:var(--white);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s}
+.accordion-card:hover{box-shadow:var(--shadow-hover)}
+.accordion-header{display:flex;align-items:flex-start;justify-content:space-between;padding:18px 20px;cursor:pointer;gap:12px;user-select:none;-webkit-user-select:none}
+.accordion-header-text{flex:1}
+.accordion-title{font-size:1rem;font-weight:600;color:var(--dark);line-height:1.4}
+.accordion-summary{font-size:0.85rem;color:var(--gray-text);margin-top:4px;line-height:1.5}
+.accordion-icon{width:28px;height:28px;border-radius:50%;background:var(--gray-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s,background .3s;color:var(--dark)}
+.accordion-card.open .accordion-icon{transform:rotate(45deg);background:var(--primary);color:white}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.accordion-card.open .accordion-body{max-height:8000px}
+.accordion-content{padding:16px 24px 24px;border-top:1px solid var(--gray-light)}
+.accordion-section{margin-bottom:16px}
+.accordion-section:last-child{margin-bottom:0}
+.accordion-section-title{font-size:0.85rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:6px}
+.accordion-section-subtitle{font-size:0.9rem;font-weight:600;color:var(--dark);margin-bottom:4px;margin-top:10px}
+.accordion-section-text{font-size:0.9rem;color:var(--dark);line-height:1.65}
+.accordion-divider{height:1px;background:var(--gray-light);margin:12px 0}
+.highlight-box{background:rgba(0,174,157,0.06);border-left:3px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 16px;margin:12px 0}
+.highlight-box p{font-size:0.88rem;line-height:1.6;color:var(--dark)}
+.highlight-box .hs{font-size:0.82rem;color:var(--gray-text);margin-top:6px}
+.tabs-header{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs-header::-webkit-scrollbar{display:none}
+.tab-btn{padding:8px 18px;border-radius:30px;border:1.5px solid var(--gray-mid);background:var(--white);color:var(--gray-text);font-family:inherit;font-size:0.85rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.tab-btn.active{background:var(--dark);color:var(--white);border-color:var(--dark)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.link-card{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);text-decoration:none;color:var(--dark);display:flex;align-items:center;justify-content:space-between;gap:8px;transition:all .2s;cursor:pointer;border:1.5px solid transparent}
+.link-card:hover{border-color:var(--primary);box-shadow:var(--shadow-hover)}
+.link-card-info{flex:1;min-width:0}
+.link-card-name{font-size:0.9rem;font-weight:600;line-height:1.3}
+.link-card-meta{font-size:0.78rem;color:var(--gray-text);margin-top:3px}
+.link-card-badge{display:inline-block;font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:4px;background:rgba(0,174,157,0.1);color:var(--primary)}
+.software-card{flex-direction:column;align-items:flex-start;gap:4px}
+.tab-intro{font-size:0.92rem;color:var(--gray-text);margin-bottom:12px;line-height:1.5}
+.category-section{margin-bottom:20px}
+.link-card-icon{flex-shrink:0;color:var(--gray-text);opacity:0.4}
+.os-section{margin-top:28px}
+.os-title{font-size:0.95rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.os-text{font-size:0.85rem;color:var(--gray-text);margin-bottom:14px}
+.img-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.img-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.img-card img{width:100%;height:180px;object-fit:cover;display:block}
+.img-card-body{padding:12px 14px}
+.img-card-name{font-size:0.88rem;font-weight:600;color:var(--dark)}
+.img-card-desc{font-size:0.8rem;color:var(--gray-text);margin-top:4px;line-height:1.5}
+.vid-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
+.vid-card video{width:100%;display:block}
+.vid-card-body{padding:14px 16px}
+.vid-card-name{font-size:1rem;font-weight:600;color:var(--dark)}
+.vid-card-desc{font-size:0.85rem;color:var(--gray-text);margin-top:4px;line-height:1.5}
+.featured-media{border-radius:var(--radius);overflow:hidden;margin-bottom:24px;box-shadow:var(--shadow)}
+.featured-media img,.featured-media video{width:100%;display:block}
+.example-block{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-top:28px}
+.example-header{padding:18px 20px;border-bottom:1px solid var(--gray-light)}
+.example-title{font-size:1.05rem;font-weight:700;color:var(--dark)}
+.example-intro{font-size:0.85rem;color:var(--gray-text);margin-top:4px;line-height:1.5}
+.example-toggle{display:flex;gap:8px;margin-top:14px}
+.toggle-btn{padding:8px 16px;border-radius:30px;border:1.5px solid var(--gray-mid);background:var(--white);color:var(--gray-text);font-family:inherit;font-size:0.82rem;font-weight:500;cursor:pointer;transition:all .2s}
+.toggle-btn.active{background:var(--dark);color:var(--white);border-color:var(--dark)}
+.example-body{padding:20px}
+.example-content p{font-size:0.9rem;line-height:1.65;color:var(--dark);margin-bottom:12px}
+.example-content p:last-child{margin-bottom:0}
+.example-content p strong{color:var(--primary);font-weight:600}
+.example-view{display:none}
+.example-view.active{display:block}
+.example-steps{list-style:none;counter-reset:step}
+.example-steps li{padding:10px 14px;background:var(--gray-light);border-radius:var(--radius-sm);margin-bottom:6px;font-size:0.88rem;font-weight:500;color:var(--dark);counter-increment:step;display:flex;align-items:center;gap:10px}
+.example-steps li::before{content:counter(step);width:24px;height:24px;border-radius:50%;background:var(--primary);color:white;font-size:0.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prompt-block{background:var(--gray-light);border-radius:var(--radius-sm);padding:18px;font-size:0.85rem;line-height:1.7;color:var(--dark);white-space:pre-wrap;word-wrap:break-word;font-family:inherit}
+.prompt-block .sl{font-weight:700;color:var(--primary);display:block;margin-top:14px;margin-bottom:2px}
+.prompt-block .sl:first-child{margin-top:0}
+.code-block{background:#1a2332;color:#e0e6ed;border-radius:var(--radius-sm);padding:18px;font-size:0.8rem;line-height:1.7;overflow-x:auto;white-space:pre;font-family:'SF Mono','Fira Code',monospace;margin:12px 0;-webkit-overflow-scrolling:touch}
+.search-wrap{position:relative;margin-bottom:16px}
+.search-input{width:100%;padding:12px 16px 12px 42px;border-radius:var(--radius);border:1.5px solid var(--gray-mid);background:var(--white);font-family:inherit;font-size:0.9rem;color:var(--dark);outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--primary)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray-text);pointer-events:none}
+.filter-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.filter-pills::-webkit-scrollbar{display:none}
+.filter-pill{padding:7px 14px;border-radius:30px;border:1.5px solid var(--gray-mid);background:var(--white);color:var(--gray-text);font-family:inherit;font-size:0.8rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s}
+.filter-pill.active{background:var(--dark);color:var(--white);border-color:var(--dark)}
+.chart-bar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chart-label{font-size:0.8rem;color:var(--dark);font-weight:500;min-width:0;flex-shrink:0;text-align:right;width:45%}
+.chart-track{flex:1;height:28px;background:var(--gray-light);border-radius:6px;overflow:hidden;position:relative}
+.chart-fill{height:100%;background:var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transition:width .6s ease}
+.chart-pct{font-size:0.72rem;font-weight:700;color:white}
+.category-title{font-size:1.1rem;font-weight:700;color:var(--dark);margin:32px 0 16px}
+.category-title:first-child{margin-top:0}
+.section-block{margin-bottom:24px}
+.section-block-title{font-size:1rem;font-weight:600;color:var(--dark);margin-bottom:6px}
+.section-block-text{font-size:0.88rem;color:var(--gray-text);line-height:1.6}
+.mini-list{list-style:none;margin-top:6px}
+.mini-list li{font-size:0.88rem;color:var(--dark);padding:3px 0;padding-left:14px;position:relative}
+.mini-list li::before{content:"•";position:absolute;left:0;color:var(--primary);font-weight:700}
+.home-page{text-align:center;padding:48px 20px 40px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.home-logo{width:120px;margin-bottom:20px;margin-top:16px}
+.home-title{font-size:2.4rem;font-weight:800;color:var(--primary);margin-bottom:8px;letter-spacing:-0.02em}
+.home-subtitle{font-size:0.9rem;color:var(--gray-text);margin-bottom:36px;max-width:320px}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px;margin-bottom:32px}
+.home-btn{background:var(--white);border-radius:var(--radius);padding:20px 14px;border:none;cursor:pointer;box-shadow:var(--shadow);text-align:center;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:inherit;color:var(--dark)}
+.home-btn:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.home-btn:active{transform:translateY(0)}
+.home-btn-icon{width:44px;height:44px;border-radius:12px;background:rgba(0,174,157,0.1);display:flex;align-items:center;justify-content:center;color:var(--primary)}
+.home-btn-label{font-size:0.78rem;font-weight:600;line-height:1.3}
+.install-banner{width:100%;max-width:400px;background:var(--white);border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);text-align:left;cursor:pointer;border:1.5px solid var(--primary)}
+.install-banner.hidden{display:none}
+.install-banner-text{flex:1;font-size:0.82rem;color:var(--dark);font-weight:500}
+.install-banner-close{width:28px;height:28px;border-radius:50%;border:none;background:var(--gray-light);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-text);flex-shrink:0}
+.install-banner-icon{color:var(--primary);flex-shrink:0}
+.footer-note{font-size:0.8rem;color:var(--gray-text);padding:16px;background:var(--gray-light);border-radius:var(--radius-sm);margin-top:20px;line-height:1.5}
+.linguagens-panel{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.linguagens-panel h3{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:14px}
+.linguagens-panel .lang-section{margin-bottom:16px}
+.linguagens-panel .lang-section:last-child{margin-bottom:0}
+.linguagens-panel .lang-label{font-size:0.85rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px}
+.linguagens-panel .lang-text{font-size:0.9rem;color:var(--dark);line-height:1.65}
+.linguagens-panel h4{font-size:0.95rem;font-weight:600;color:var(--dark);margin-top:20px;margin-bottom:8px}
+.no-results{text-align:center;padding:40px 20px;color:var(--gray-text);font-size:0.9rem}
+@media(min-width:768px){
+.container{padding:32px 24px 60px}
+.cards-grid{grid-template-columns:1fr 1fr 1fr}
+.img-cards-grid{grid-template-columns:1fr 1fr 1fr}
+.chart-label{width:200px}
+.home-grid{max-width:480px}
+}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+<div class="home-page">
+<img src="assets/logo.svg" alt="Sicoob" class="home-logo">
+<h1 class="home-title">PROMPTÁRIO</h1>
+<p class="home-subtitle">Seu app companion de imersão em IA</p>
+<div class="install-banner" id="installBanner" onclick="installPWA()">
+<span class="install-banner-icon"><i data-lucide="plus-circle" style="width:22px;height:22px"></i></span>
+<span class="install-banner-text">Clique aqui para adicionar esse aplicativo à tela inicial</span>
+<button class="install-banner-close" onclick="event.stopPropagation();document.getElementById('installBanner').classList.add('hidden')"><i data-lucide="x" style="width:14px;height:14px"></i></button>
+</div>
+<div class="home-grid">
+<button class="home-btn" onclick="showPage('page-conceitos')"><div class="home-btn-icon"><i data-lucide="lightbulb" style="width:22px;height:22px"></i></div><div class="home-btn-label">CONCEITOS</div></button>
+<button class="home-btn" onclick="showPage('page-modelos')"><div class="home-btn-icon"><i data-lucide="layout-grid" style="width:22px;height:22px"></i></div><div class="home-btn-label">MODELOS E AGREGADORES</div></button>
+<button class="home-btn" onclick="showPage('page-engenharia')"><div class="home-btn-icon"><i data-lucide="wrench" style="width:22px;height:22px"></i></div><div class="home-btn-label">ENGENHARIA DE PROMPT</div></button>
+<button class="home-btn" onclick="showPage('page-linguagens')"><div class="home-btn-icon"><i data-lucide="code" style="width:22px;height:22px"></i></div><div class="home-btn-label">LINGUAGENS DE ESTRUTURAÇÃO</div></button>
+<button class="home-btn" onclick="showPage('page-prompt-imagem')"><div class="home-btn-icon"><i data-lucide="image" style="width:22px;height:22px"></i></div><div class="home-btn-label">PROMPT DE IMAGEM</div></button>
+<button class="home-btn" onclick="showPage('page-prompt-video')"><div class="home-btn-icon"><i data-lucide="video" style="width:22px;height:22px"></i></div><div class="home-btn-label">PROMPT DE VÍDEO</div></button>
+<button class="home-btn" onclick="showPage('page-palavras-chave')"><div class="home-btn-icon"><i data-lucide="key" style="width:22px;height:22px"></i></div><div class="home-btn-label">PALAVRAS-CHAVE</div></button>
+<button class="home-btn" onclick="showPage('page-movimentos')"><div class="home-btn-icon"><i data-lucide="clapperboard" style="width:22px;height:22px"></i></div><div class="home-btn-label">MOVIMENTOS DE CÂMERA</div></button>
+</div>
+</div>
+</div>
+
+<!-- CONCEITOS -->
+<div class="page" id="page-conceitos"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Conceitos</h1><p class="page-subtitle">Uma consulta rápida para entender conceitos que parecem parecidos, mas mudam bastante a forma de usar inteligência artificial na prática</p></div></div>
+<div class="intro-block"><div class="intro-title">Como usar esta página</div><div class="intro-text">Abra os tópicos abaixo para visualizar comparações rápidas entre conceitos centrais de IA. A proposta aqui não é aprofundar cada tema, mas tornar claras as diferenças que mais impactam o uso prático no dia a dia.</div></div>
+<p class="intro-small" style="margin-bottom:16px">Toque ou clique em cada item para expandir</p>
+<div id="conceitos-list"></div>
+</div></div>
+
+<!-- MODELOS -->
+<div class="page" id="page-modelos"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Modelos, plataformas e softwares de IA</h1><p class="page-subtitle">Uma biblioteca rápida com nomes relevantes de IA por modalidade, com acesso direto às páginas oficiais</p></div></div>
+<div class="intro-block"><div class="intro-title">Como usar esta página</div><div class="intro-text">Navegue pelas categorias para ver plataformas, modelos, suítes e softwares conhecidos de IA. Cada card leva diretamente ao site oficial correspondente, facilitando consulta, demonstração e exploração durante a imersão.</div><div class="intro-small">Toque ou clique em um card para abrir a página oficial</div></div>
+<div class="tabs-header" id="modelos-tabs"></div>
+<div id="modelos-content"></div>
+</div></div>
+
+<!-- ENGENHARIA -->
+<div class="page" id="page-engenharia"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Como montar um prompt completo</h1><p class="page-subtitle">Na maioria dos modelos, um bom prompt funciona como um briefing bem construído</p></div></div>
+<div class="intro-block"><div class="intro-title">A lógica por trás de um bom prompt</div><div class="intro-text">Um prompt completo não é só um pedido. Na prática, ele funciona como um briefing: define o papel do modelo, orienta seu comportamento, delimita o que ele deve fazer, explica como a resposta deve sair e prevê o que fazer quando houver dúvida, erro ou ambiguidade.</div><div class="intro-text" style="margin-top:8px">Quanto mais clara for essa estrutura, maior a chance de a resposta vir útil, consistente e alinhada ao que você realmente queria.</div></div>
+<div class="featured-media"><img src="assets/IMAGEM_IMAGEM_1.png" alt="Estrutura de prompt" loading="lazy"></div>
+<div class="section-block"><div class="section-block-title">Estrutura de um prompt completo</div><div class="section-block-text">A sequência abaixo mostra uma estrutura muito útil para prompts mais robustos:</div>
+<ol class="example-steps" style="margin-top:12px"><li>Contexto e papel</li><li>Regras operacionais</li><li>Função central e capacidades</li><li>Configuração técnica</li><li>Especificações de saída</li><li>Tratamento de erros</li><li>Controles de qualidade</li><li>Segurança e ética</li><li>Regras adicionais</li></ol>
+<p class="intro-small">Toque ou clique em cada etapa para entender o que entra nela</p></div>
+<div id="engenharia-list"></div>
+<div class="example-block" id="engenharia-example"></div>
+</div></div>
+
+<!-- LINGUAGENS -->
+<div class="page" id="page-linguagens"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Linguagens de estruturação</h1><p class="page-subtitle">Formatos como JSON, YAML, Markdown e XML ajudam a organizar melhor a instrução e reduzir ambiguidades</p></div></div>
+<div class="intro-block"><div class="intro-title">Por que estruturar um prompt?</div><div class="intro-text">Quando um prompt é organizado em formatos mais estruturados, ele fica dividido em partes mais claras, quase como se cada informação estivesse em uma caixa própria. Isso ajuda a separar melhor contexto, regras, dados, listas, valores e resultados esperados.</div><div class="intro-text" style="margin-top:8px">Como os modelos reconhecem padrões em vez de "entender" como uma pessoa, formatos mais organizados dão pistas mais claras sobre o papel de cada trecho. Isso reduz ambiguidades e tende a tornar a interpretação mais precisa.</div></div>
+<div class="featured-media"><img src="assets/IMAGEM_LINGUAGENS_1.png" alt="Linguagens" loading="lazy"></div>
+<div class="section-block"><div class="section-block-title">Como esses formatos ajudam a IA</div><div class="section-block-text">Esses formatos ajudam porque tornam a estrutura do prompt mais explícita. Em vez de um bloco único de texto, a instrução passa a ter marcações, chaves, listas, títulos ou tags que indicam melhor o papel de cada informação.</div>
+<ul class="mini-list" style="margin-top:10px"><li>deixam mais claro o que é título, regra, dado ou valor</li><li>ajudam a separar blocos e reduzir confusão</li><li>facilitam identificar hierarquia e relação entre partes</li><li>tornam a instrução mais previsível e controlável</li></ul>
+<div class="section-block-text" style="margin-top:10px">Isso não significa que a IA "entende código" do mesmo jeito que uma pessoa entende. O ganho acontece porque a organização do texto cria padrões mais fáceis de reconhecer e seguir.</div></div>
+<p class="intro-small" style="margin-bottom:8px">Selecione um formato para comparar</p>
+<div class="tabs-header" id="linguagens-tabs"></div>
+<div id="linguagens-content"></div>
+<div class="section-block" style="margin-top:28px"><div class="section-block-title">O que muda na prática</div><div class="section-block-text">Esses formatos não garantem, sozinhos, que o resultado será perfeito. O principal ganho está em tornar a instrução mais organizada, clara e controlável. Quanto melhor a separação entre partes, menor a chance de o modelo misturar função, regra, contexto e resultado esperado.</div><div class="section-block-text" style="margin-top:8px">Não existe um único formato ideal para tudo. O melhor formato depende da tarefa, do modelo e do nível de controle que você quer ter sobre o prompt.</div></div>
+</div></div>
+
+<!-- GLOSSÁRIO -->
+<div class="page" id="page-glossario"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Glossário</h1><p class="page-subtitle">Termos essenciais para entender melhor como os modelos, sistemas e fluxos de IA funcionam na prática</p></div></div>
+<div class="intro-block"><div class="intro-title">Como usar esta página</div><div class="intro-text">Use a busca ou os filtros para encontrar rapidamente termos importantes do ecossistema de IA. Cada item explica, de forma simples, o que aquele conceito significa, para que ele serve e onde costuma aparecer na prática.</div><div class="intro-small">Toque ou clique em um termo para expandir</div></div>
+<div class="search-wrap"><span class="search-icon"><i data-lucide="search" style="width:16px;height:16px"></i></span><input type="text" class="search-input" id="glossarySearch" placeholder="Buscar termo, sigla ou conceito" oninput="filterGlossary()"></div>
+<div class="filter-pills" id="glossaryFilters"></div>
+<div id="glossario-list"></div>
+<div class="no-results" id="glossaryNoResults" style="display:none">Nenhum termo encontrado com essa busca</div>
+</div></div>
+
+<!-- PROMPT IMAGEM -->
+<div class="page" id="page-prompt-imagem"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Como montar um prompt de imagem</h1><p class="page-subtitle">Um bom prompt visual funciona como um briefing de direção criativa</p></div></div>
+<div class="intro-block"><div class="intro-title">A lógica por trás de um bom prompt visual</div><div class="intro-text">Um prompt de imagem não precisa ser só uma descrição solta. Quando ele é organizado em partes, fica mais fácil guiar sujeito, pose, ambiente, luz, cor, composição e estilo.</div><div class="intro-text" style="margin-top:8px">Quanto mais clara for essa estrutura, maior a chance de o resultado vir mais próximo da intenção visual.</div></div>
+<div class="featured-media"><img src="assets/PROMPT DE IMAGEM.png" alt="Prompt de imagem" loading="lazy"></div>
+<div class="section-block"><div class="section-block-title">Estrutura de um prompt de imagem</div><div class="section-block-text">A sequência abaixo mostra uma estrutura muito útil para prompts visuais mais completos:</div>
+<ol class="example-steps" style="margin-top:12px"><li>Sujeito</li><li>Pose/ação + expressão</li><li>Ambiente</li><li>Composição</li><li>Luz</li><li>Cores</li><li>Textura/material</li><li>Estilo + processamento</li><li>Clima/emoção</li><li>Elementos obrigatórios + restrições</li></ol>
+<p class="intro-small">Toque ou clique em cada etapa para entender o que entra nela</p></div>
+<div id="prompt-imagem-list"></div>
+<div class="example-block" id="prompt-imagem-example"></div>
+</div></div>
+
+<!-- PROMPT VÍDEO -->
+<div class="page" id="page-prompt-video"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Como montar um prompt de vídeo</h1><p class="page-subtitle">Um bom prompt de vídeo funciona como uma direção audiovisual bem construída</p></div></div>
+<div class="intro-block"><div class="intro-title">A lógica por trás de um bom prompt de vídeo</div><div class="intro-text">Um prompt de vídeo não deve descrever só o que aparece na cena. Ele precisa orientar como a cena é vista, como ela se move, qual sensação transmite e como o tempo da tomada é construído.</div><div class="intro-text" style="margin-top:8px">Quanto mais clara for essa estrutura, maior a chance de o vídeo parecer intencional, coerente e cinematográfico.</div></div>
+<div class="intro-block"><div class="intro-title">Como pensar um prompt de vídeo</div><div class="intro-text">Você deve abordar cada prompt como se reunisse, ao mesmo tempo, o olhar de um diretor, a visão de um produtor, a sensibilidade de um cinematografista e a construção narrativa de um roteirista.</div></div>
+<div class="featured-media"><video src="assets/VIDEO_VIDEO_1.mp4" controls playsinline></video></div>
+<div class="section-block"><div class="section-block-title">Estrutura de um prompt de vídeo</div><div class="section-block-text">A sequência abaixo mostra uma estrutura muito útil para prompts de vídeo mais completos:</div>
+<ol class="example-steps" style="margin-top:12px"><li>Composição</li><li>Luz</li><li>Cores</li><li>Clima/emoção</li><li>Tipos de plano</li><li>Movimento</li><li>Ritmo</li><li>Ação</li></ol>
+<p class="intro-small">Toque ou clique em cada etapa para entender o que entra nela</p></div>
+<div id="prompt-video-list"></div>
+<div class="example-block" id="prompt-video-example"></div>
+</div></div>
+
+<!-- PALAVRAS-CHAVE -->
+<div class="page" id="page-palavras-chave"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Palavras-chave</h1><p class="page-subtitle">Um banco de referência visual de termos que ajudam a direcionar melhor o resultado de um prompt</p></div></div>
+<div class="intro-block"><div class="intro-title">Por que palavras-chave importam tanto?</div><div class="intro-text">Palavras-chave ajudam a guiar o prompt e direcionar a imagem com mais precisão. Elas funcionam como marcadores de intenção visual, indicando para a IA o que deve ganhar mais peso na geração.</div><div class="intro-text" style="margin-top:8px">Quando uma IA processa um prompt, ela não trata todas as palavras com a mesma importância. Existe um sistema de atenção que distribui mais peso para certos trechos do texto, especialmente aqueles que definem sujeito, ação, ambiente, luz e enquadramento.</div></div>
+<div class="section-block"><div class="section-block-title">Como a IA distribui atenção dentro do prompt</div><div class="section-block-text">Imagine que a IA tem 100 pontos de atenção para distribuir entre as palavras do seu prompt. Algumas recebem muito mais peso do que outras. Em muitos casos, os trechos mais importantes podem concentrar boa parte dessa atenção, enquanto termos mais periféricos acabam tendo pouca influência na imagem final.</div><div class="section-block-text" style="margin-top:8px">Na prática, isso significa que a ordem e a clareza das palavras importam. Quanto mais estratégico for o uso dos termos, maior a chance de o resultado seguir a intenção desejada.</div></div>
+<div class="section-block"><div class="section-block-title">Distribuição média de atenção no prompt</div><div id="attention-chart" style="margin-top:14px"></div></div>
+<div class="intro-block"><div class="intro-title">Como usar este banco de referência</div><div class="intro-text">Os cards abaixo mostram palavras-chave importantes para usar em prompts. Cada uma delas aponta para um efeito visual específico. A ideia não é decorar termos isolados, mas entender que tipo de resultado cada escolha tende a puxar.</div><div class="intro-text" style="margin-top:8px">Cada card mostra uma imagem de referência, o nome da palavra-chave e uma descrição curta explicando o efeito mais comum que ela gera no resultado final.</div></div>
+<div id="palavras-chave-content"></div>
+</div></div>
+
+<!-- MOVIMENTOS -->
+<div class="page" id="page-movimentos"><div class="container">
+<div class="page-header"><button class="back-btn" onclick="showPage('page-home')"><i data-lucide="arrow-left" style="width:18px;height:18px"></i></button><div class="page-header-text"><h1 class="page-title">Movimentos de Câmera</h1><p class="page-subtitle">Um banco de referência visual de termos que ajudam a direcionar melhor o movimento da câmera em prompts de vídeo</p></div></div>
+<div class="intro-block"><div class="intro-title">Por que essas palavras importam tanto?</div><div class="intro-text">Palavras ligadas a movimento de câmera ajudam a transformar um prompt de vídeo em algo mais claro, intencional e cinematográfico. Elas funcionam como comandos de direção visual, orientando como a câmera deve avançar, recuar, girar, acompanhar ou revelar a cena.</div></div>
+<div class="section-block"><div class="section-block-title">Como essas palavras orientam a geração</div><div class="section-block-text">Na prática, essas palavras e frases estabelecem a direção de movimento dentro do prompt para gerar um vídeo. Em vez de apenas descrever o que aparece na cena, você também passa a orientar como a câmera deve se comportar ao longo do tempo.</div><div class="section-block-text" style="margin-top:8px">Isso ajuda a IA a interpretar melhor o tipo de deslocamento desejado e torna o resultado mais coerente com a intenção visual do prompt.</div></div>
+<div class="intro-block"><div class="intro-title">Como usar este banco de referência</div><div class="intro-text">Os cards abaixo mostram movimentos de câmera muito usados em prompts de vídeo. Cada termo tende a puxar um comportamento visual específico. A ideia aqui não é decorar nomes isolados, mas entender que tipo de sensação, leitura espacial ou efeito narrativo cada escolha ajuda a produzir.</div><div class="intro-text" style="margin-top:8px">Cada card mostra um vídeo de referência, o nome do movimento e uma descrição curta explicando o efeito mais comum que ele gera no resultado final.</div></div>
+<p class="intro-small" style="margin-bottom:16px">Explore alguns dos movimentos de câmera mais úteis para prompts de vídeo</p>
+<div id="movimentos-grid"></div>
+<div id="movimentos-outras" style="margin-top:28px"></div>
+<div id="movimentos-dicas" style="margin-top:20px"></div>
+</div></div>
+
+<script src="data.js"></script>
+</body>
+</html>

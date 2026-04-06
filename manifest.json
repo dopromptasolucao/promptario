@@ -1,0 +1,22 @@
+{
+  "name": "PROMPTÁRIO",
+  "short_name": "PROMPTÁRIO",
+  "description": "Guia completo para engenharia de prompts com IA",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00ae9d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
