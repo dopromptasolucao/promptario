@@ -170,6 +170,17 @@ body{font-family:'SS',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
 .prompt-gen-textarea:focus{border-color:var(--primary)}
 .prompt-gen-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:var(--radius-sm);border:none;background:var(--primary);color:white;font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .2s;align-self:flex-end}
 .prompt-gen-btn:hover{background:var(--dark)}
+.video-gen-form{padding:16px 20px;display:flex;flex-direction:column;gap:20px}
+.vgen-field{display:flex;flex-direction:column;gap:6px}
+.vgen-label{font-size:0.9rem;font-weight:700;color:var(--dark)}
+.vgen-hint{font-size:0.8rem;color:var(--gray-text);line-height:1.4}
+.vgen-select{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-mid);background:var(--white);font-family:inherit;font-size:0.88rem;color:var(--dark);outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.vgen-select:focus{border-color:var(--primary)}
+.vgen-textarea{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-mid);background:var(--white);font-family:inherit;font-size:0.88rem;color:var(--dark);outline:none;resize:vertical;min-height:50px;line-height:1.5}
+.vgen-textarea:focus{border-color:var(--primary)}
+.vgen-outro-input{width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-mid);background:var(--white);font-family:inherit;font-size:0.85rem;color:var(--dark);outline:none;margin-top:6px;display:none}
+.vgen-outro-input:focus{border-color:var(--primary)}
+.vgen-actions{display:flex;justify-content:flex-end;padding-top:8px}
 @media(min-width:768px){
 .container{padding:32px 24px 60px}
 .cards-grid{grid-template-columns:1fr 1fr 1fr}
@@ -238,14 +249,14 @@ body{font-family:'SS',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
 <div class="prompt-gen-icon"><i data-lucide="sparkles" style="width:20px;height:20px"></i></div>
 <div>
 <h3 class="prompt-gen-title">Vamos montar seu prompt</h3>
-<p class="prompt-gen-subtitle">Escreva, com base na estrutura que você aprendeu, a ideia do seu prompt e o que você quer que ele faça. Em seguida, aperte <strong>Gerar</strong>. Você será levado ao ChatGPT já com o prompt de transformação pronto — é só clicar na setinha!</p>
+<p class="prompt-gen-subtitle">Escreva a ideia do seu prompt e o que você quer que ele faça. Ao clicar em <strong>Gerar</strong>, o prompt completo será copiado e o ChatGPT abrirá automaticamente — é só colar (Ctrl+V) e enviar!</p>
 </div>
 </div>
 <div class="prompt-gen-input-area">
 <textarea class="prompt-gen-textarea" id="promptGenInput" placeholder="Ex: Quero um prompt para um assistente que resuma relatórios financeiros longos em bullet points objetivos..." rows="4"></textarea>
 <button class="prompt-gen-btn" id="promptGenBtn" onclick="sendToChatGPT()">
-<i data-lucide="external-link" style="width:18px;height:18px"></i>
-<span>Gerar no ChatGPT</span>
+<i data-lucide="copy" style="width:18px;height:18px"></i>
+<span>Gerar e Copiar</span>
 </button>
 </div>
 </div>
@@ -286,6 +297,24 @@ body{font-family:'SS',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
 <p class="intro-small">Toque ou clique em cada etapa para entender o que entra nela</p></div>
 <div id="prompt-imagem-list"></div>
 <div class="example-block" id="prompt-imagem-example"></div>
+
+<div class="prompt-gen-box" id="image-prompt-generator">
+<div class="prompt-gen-header">
+<div class="prompt-gen-icon"><i data-lucide="sparkles" style="width:20px;height:20px"></i></div>
+<div>
+<h3 class="prompt-gen-title">Vamos montar seu prompt</h3>
+<p class="prompt-gen-subtitle">Com base no que você aprendeu, descreva a imagem que você imagina. Lembre-se também de colocar as dimensões dela! Ao clicar em <strong>Gerar</strong>, o prompt completo será copiado e o ChatGPT abrirá automaticamente — é só colar (Ctrl+V) e enviar, que o melhor prompt será montado!</p>
+</div>
+</div>
+<div class="prompt-gen-input-area">
+<textarea class="prompt-gen-textarea" id="imageGenInput" placeholder="Ex: Uma mulher caminhando por uma rua de Paris no fim da tarde, vestindo um sobretudo bege, no formato 3:4..." rows="5"></textarea>
+<button class="prompt-gen-btn" id="imageGenBtn" onclick="sendImageToChatGPT()">
+<i data-lucide="copy" style="width:18px;height:18px"></i>
+<span>Gerar e Copiar</span>
+</button>
+</div>
+</div>
+
 </div></div>
 
 <!-- PROMPT VÍDEO -->
@@ -295,10 +324,22 @@ body{font-family:'SS',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;bac
 <div class="intro-block"><div class="intro-title">Como pensar um prompt de vídeo</div><div class="intro-text">Você deve abordar cada prompt como se reunisse, ao mesmo tempo, o olhar de um diretor, a visão de um produtor, a sensibilidade de um cinematografista e a construção narrativa de um roteirista.</div></div>
 <div class="featured-media"><video src="assets/VIDEO_VIDEO_1.mp4" controls playsinline></video></div>
 <div class="section-block"><div class="section-block-title">Estrutura de um prompt de vídeo</div><div class="section-block-text">A sequência abaixo mostra uma estrutura muito útil para prompts de vídeo mais completos:</div>
-<ol class="example-steps" style="margin-top:12px"><li>Composição</li><li>Luz</li><li>Cores</li><li>Clima/emoção</li><li>Tipos de plano</li><li>Movimento</li><li>Ritmo</li><li>Ação</li></ol>
+<ol class="example-steps" style="margin-top:12px"><li>Descrição geral</li><li>Composição</li><li>Luz</li><li>Cores</li><li>Clima/emoção</li><li>Movimento</li><li>Variação de planos</li><li>Ritmo</li><li>Ação</li></ol>
 <p class="intro-small">Toque ou clique em cada etapa para entender o que entra nela</p></div>
 <div id="prompt-video-list"></div>
 <div class="example-block" id="prompt-video-example"></div>
+
+<div class="prompt-gen-box" id="video-prompt-generator">
+<div class="prompt-gen-header">
+<div class="prompt-gen-icon"><i data-lucide="sparkles" style="width:20px;height:20px"></i></div>
+<div>
+<h3 class="prompt-gen-title">Vamos montar seu prompt</h3>
+<p class="prompt-gen-subtitle">Selecione e escreva as opções do seu prompt. Ao clicar em <strong>Gerar</strong>, o prompt completo será copiado e o ChatGPT abrirá automaticamente — é só colar (Ctrl+V) e enviar, que o melhor prompt será montado!</p>
+</div>
+</div>
+<div class="video-gen-form" id="videoGenForm"></div>
+</div>
+
 </div></div>
 
 <!-- PALAVRAS-CHAVE -->

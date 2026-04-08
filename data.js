@@ -1693,12 +1693,13 @@ function initPromptVideo() {
   const exampleContainer = document.getElementById('prompt-video-example');
 
   const cards = [
+    { title: 'Descrição geral', icon: 'FileText', description: 'Define de forma geral o personagem, a ação principal e o cenário.', whatIs: 'É a parte em que você descreve, de forma geral, quem é o personagem, o que ele faz e onde a cena acontece.', whyMatters: 'Sem uma descrição geral clara, o gerador de vídeo não tem base para construir a cena. É o ponto de partida que ancora todos os outros elementos.', whatEnters: ['personagem principal','ação central','cenário ou localização'], miniExample: 'Um homem jovem de terno caminha por uma rua movimentada de São Paulo, com prédios comerciais ao fundo e trânsito leve.' },
     { title: 'Composição', icon: 'Frame', description: 'Define como a cena será enquadrada.', whatIs: 'É a parte que define como a câmera vê a cena.', whyMatters: 'A composição muda leitura, escala, presença e impacto visual.', whatEnters: ['plano','ângulo','lente'], miniExample: 'A cena é construída em plano médio, com ângulo frontal levemente baixo e lente que mantém o sujeito em destaque sem distorcer o ambiente.' },
     { title: 'Luz', icon: 'Sun', description: 'Define a iluminação da cena.', whatIs: 'É a direção, dureza e temperatura da luz no vídeo.', whyMatters: 'A luz define volume, profundidade, realismo e atmosfera.', whatEnters: ['direção','dureza','temperatura'], miniExample: 'A iluminação entra pela lateral com suavidade, criando sombras leves e uma temperatura neutra que deixa a cena natural e limpa.' },
     { title: 'Cores', icon: 'Palette', description: 'Define a paleta visual do vídeo.', whatIs: 'É a escolha das cores dominantes e do contraste entre elas.', whyMatters: 'A paleta ajuda a unificar a cena e reforçar identidade visual.', whatEnters: ['paleta principal','contraste','cor de destaque'], miniExample: 'A paleta combina branco, cinza claro e tons neutros, com turquesa #00AE9D aparecendo como cor de destaque.' },
     { title: 'Clima/emoção', icon: 'Heart', description: 'Define a sensação geral da cena.', whatIs: 'É o estado emocional que o vídeo deve transmitir.', whyMatters: 'Mesmo com boa técnica, um vídeo sem clima pode parecer vazio.', whatEnters: ['emoção','atmosfera','sensação dominante'], miniExample: 'O vídeo transmite uma sensação leve, confiante e moderna, com atmosfera limpa e energia controlada.' },
-    { title: 'Tipos de plano', icon: 'Eye', description: 'Define a variação de enquadramentos ao longo da cena.', whatIs: 'É a escolha dos tipos de plano usados no vídeo.', whyMatters: 'A alternância de planos muda ritmo, foco e percepção de espaço.', whatEnters: ['close','médio','aberto','drone'], miniExample: 'A cena começa em plano aberto para situar o ambiente, passa para plano médio no sujeito e termina mais próxima para reforçar a presença.' },
     { title: 'Movimento', icon: 'Move', description: 'Define como a câmera se desloca.', whatIs: 'É a orientação de movimento de câmera durante a tomada.', whyMatters: 'O movimento muda energia, fluidez e sensação de presença.', whatEnters: ['pan','tilt','dolly','handheld suave'], miniExample: 'A câmera avança com um dolly suave enquanto acompanha o sujeito, mantendo um movimento estável e elegante.' },
+    { title: 'Variação de planos', icon: 'Eye', description: 'Define a variação de enquadramentos ao longo da cena.', whatIs: 'É a mudança de plano que acontece durante a tomada, quando a câmera transita de um enquadramento para outro.', whyMatters: 'A alternância de planos muda ritmo, foco e percepção de espaço, criando dinamismo dentro de uma mesma cena.', whatEnters: ['transição de plano','plano inicial vs. plano final','variação ao longo do take'], miniExample: 'A cena começa em plano aberto para situar o ambiente, passa para plano médio no sujeito e termina mais próxima para reforçar a presença.' },
     { title: 'Ritmo', icon: 'Music', description: 'Define o tempo e a velocidade da cena.', whatIs: 'É a forma como o vídeo organiza duração, cadência e sensação temporal.', whyMatters: 'O ritmo influencia tensão, leveza, dinamismo e clareza narrativa.', whatEnters: ['cortes rápidos','take contínuo','frenético','calmo'], miniExample: 'A cena tem ritmo calmo, com continuidade suave e tempo suficiente para perceber o ambiente e a ação sem pressa.' },
     { title: 'Ação', icon: 'Zap', description: 'Define o que acontece em cada tomada.', whatIs: 'É a parte que diz o que o sujeito faz, de forma clara e limitada.', whyMatters: 'Vídeos funcionam melhor quando cada tomada tem poucas ações bem definidas.', whatEnters: ['1 a 3 ações por tomada','ação principal','transição de comportamento'], miniExample: 'A personagem caminha alguns passos, olha para a câmera e depois ajusta levemente a postura enquanto continua em movimento.' }
   ];
@@ -1808,19 +1809,229 @@ function initPromptVideo() {
     </div>
     <div class="example-body">
       <div class="example-content">
-        <p><strong>Composição:</strong> a cena é construída com lente natural e enquadramento elegante, começando em plano aberto para mostrar a rua e depois aproximando para um plano médio da personagem.</p>
+        <p><strong>Descrição geral:</strong> um homem jovem de terno caminha por uma rua movimentada de São Paulo, com prédios comerciais ao fundo e trânsito leve.</p>
+        <p><strong>Composição:</strong> a cena é construída em plano médio, com ângulo frontal levemente baixo e lente natural que mantém o sujeito em destaque sem distorcer o ambiente.</p>
         <p><strong>Luz:</strong> a iluminação vem de uma luz natural suave lateral, com sombras leves e temperatura neutra de fim de manhã.</p>
         <p><strong>Cores:</strong> a paleta mistura branco, cinza claro e tons urbanos neutros, com turquesa #00AE9D aparecendo como ponto de destaque visual.</p>
         <p><strong>Clima/emoção:</strong> o vídeo transmite uma sensação moderna, leve e confiante, com atmosfera limpa e controlada.</p>
-        <p><strong>Tipos de plano:</strong> a sequência alterna entre plano aberto para situar o espaço, plano médio para acompanhar a personagem e um close leve no final.</p>
         <p><strong>Movimento:</strong> a câmera acompanha com dolly suave, mantendo deslocamento estável e natural ao longo da tomada.</p>
+        <p><strong>Variação de planos:</strong> a sequência começa em plano médio e se aproxima gradualmente até um close leve no final da tomada.</p>
         <p><strong>Ritmo:</strong> o ritmo é calmo, com transição fluida entre os enquadramentos e sem cortes frenéticos.</p>
         <p><strong>Ação:</strong> a personagem caminha pela calçada, olha brevemente para a câmera e ajusta a bolsa no ombro enquanto continua andando.</p>
       </div>
     </div>
   `;
 
+  // Build video prompt generator form
+  buildVideoGenForm();
+
   lucide.createIcons();
+}
+
+function buildVideoGenForm() {
+  const form = document.getElementById('videoGenForm');
+  if (!form) return;
+
+  const fields = [
+    { id: 'vgen-descricao', label: 'Descrição geral', type: 'textarea', hint: 'Escreva aqui o personagem, ação principal e cenário geral da situação do seu vídeo.' },
+    { id: 'vgen-plano', label: 'Composição — Plano inicial', type: 'select', hint: '', options: ['Plano geral','Grande plano geral','Plano aberto','Plano médio','Plano médio curto','Plano americano','Close-up','Close-up extremo','Plano detalhe','Over the shoulder','Dois personagens no quadro','Corpo inteiro','Meio corpo','Retrato de busto'] },
+    { id: 'vgen-angulo', label: 'Composição — Ângulo', type: 'select', hint: '', options: ['Frontal reto','Frontal levemente de cima','Frontal levemente de baixo','Perfil','3/4 frontal','3/4 traseiro','Costas','Contra-plongée','Plongée','Nível dos olhos','Ângulo inclinado','Top shot','Low angle lateral','POV','Overhead'] },
+    { id: 'vgen-lente', label: 'Composição — Lente', type: 'select', hint: '', options: ['14mm ultra wide','18mm wide','24mm wide','28mm wide natural','35mm cinematográfica versátil','50mm natural','85mm retrato','100mm retrato comprimido','135mm tele curta','200mm tele'] },
+    { id: 'vgen-luz', label: 'Luz', type: 'select', hint: '', options: ['Luz frontal','Luz de lado','Rembrandt lighting','Three-quarter light','Back light','Top light','Bottom light','Under light','Split lighting','Butterfly lighting','Loop lighting','Broad lighting','Short light','Hard light','Soft light','Diffused light','Specular light','Warm light','Neutral light','Cool light','Daylight','Cold light','Neon light','Snoot','Rim light','Luz de fundo','Accent light','Golden hour','Blue hour','Overcast','Direct sunlight','Luz de janela','Reflected light','Luz volumétrica','Lens flare','Chiaroscuro','High key','Low key'] },
+    { id: 'vgen-cores', label: 'Cores', type: 'textarea', hint: 'Escreva aqui a paleta principal de cores, onde elas devem estar, contraste e descreva a coloração do vídeo.' },
+    { id: 'vgen-clima', label: 'Clima/emoção', type: 'textarea', hint: 'Descreva qual emoção, atmosfera e sensação dominante deve ter o seu vídeo.' },
+    { id: 'vgen-movimento', label: 'Movimento', type: 'select', hint: '', options: ['Static','Push in / Dolly in','Dolly out / Pull back','Pan left','Pan right','Tilt up','Tilt down','Orbit left','Orbit right','Tracking shot','Follow shot','Handheld','Gimbal shot'] },
+    { id: 'vgen-variacao', label: 'Variação de plano', type: 'textarea', hint: 'Se o plano variar ao longo do vídeo, adicionar aqui. Exemplo: se torna plano médio; se torna plano aberto. Caso não varie, deixe em branco.' },
+    { id: 'vgen-ritmo', label: 'Ritmo', type: 'select', hint: '', options: ['Cortes rápidos','Take contínuo','Frenético','Calmo','Parado'] },
+    { id: 'vgen-acao', label: 'Ação', type: 'textarea', hint: 'Aqui, você vai detalhar todas as diferentes ações que a cena terá. Por exemplo, se você quer um vídeo de uma pessoa andando, fale se ela deve olhar para o lado, ou sorrir… Qualquer ação secundária entra aqui.' },
+    { id: 'vgen-gerador', label: 'Gerador de vídeo', type: 'textarea', hint: 'Digite aqui qual gerador de vídeo você usará, como Google Veo, Kling, Seedance, etc.' }
+  ];
+
+  let html = '';
+  fields.forEach(f => {
+    html += '<div class="vgen-field">';
+    html += `<label class="vgen-label" for="${f.id}">${f.label}</label>`;
+    if (f.hint) html += `<span class="vgen-hint">${f.hint}</span>`;
+    if (f.type === 'textarea') {
+      html += `<textarea class="vgen-textarea" id="${f.id}" rows="2"></textarea>`;
+    } else if (f.type === 'select') {
+      html += `<select class="vgen-select" id="${f.id}">`;
+      html += '<option value="">Selecione...</option>';
+      f.options.forEach(opt => {
+        html += `<option value="${opt}">${opt}</option>`;
+      });
+      html += '<option value="__outro__">Outro</option>';
+      html += '</select>';
+      html += `<input type="text" class="vgen-outro-input" id="${f.id}-outro" placeholder="Digite aqui...">`;
+    }
+    html += '</div>';
+  });
+
+  html += '<div class="vgen-actions">';
+  html += '<button class="prompt-gen-btn" id="videoGenBtn" onclick="sendVideoToChatGPT()"><i data-lucide="copy" style="width:18px;height:18px"></i><span>Gerar e Copiar</span></button>';
+  html += '</div>';
+
+  form.innerHTML = html;
+
+  // Wire up "Outro" toggles
+  form.querySelectorAll('.vgen-select').forEach(sel => {
+    sel.addEventListener('change', function() {
+      const outroInput = document.getElementById(this.id + '-outro');
+      if (outroInput) {
+        outroInput.style.display = this.value === '__outro__' ? 'block' : 'none';
+        if (this.value === '__outro__') outroInput.focus();
+      }
+    });
+  });
+}
+
+function getVideoFieldValue(id) {
+  const sel = document.getElementById(id);
+  if (!sel) return '';
+  if (sel.tagName === 'SELECT') {
+    if (sel.value === '__outro__') {
+      const outro = document.getElementById(id + '-outro');
+      return outro ? outro.value.trim() : '';
+    }
+    return sel.value;
+  }
+  return sel.value.trim();
+}
+
+function sendVideoToChatGPT() {
+  const parts = [];
+  const descricao = getVideoFieldValue('vgen-descricao');
+  if (descricao) parts.push(descricao);
+  const plano = getVideoFieldValue('vgen-plano');
+  if (plano) parts.push(plano);
+  const angulo = getVideoFieldValue('vgen-angulo');
+  if (angulo) parts.push(angulo);
+  const lente = getVideoFieldValue('vgen-lente');
+  if (lente) parts.push(lente);
+  const luz = getVideoFieldValue('vgen-luz');
+  if (luz) parts.push(luz);
+  const cores = getVideoFieldValue('vgen-cores');
+  if (cores) parts.push(cores);
+  const clima = getVideoFieldValue('vgen-clima');
+  if (clima) parts.push(clima);
+  const movimento = getVideoFieldValue('vgen-movimento');
+  if (movimento) parts.push(movimento);
+  const variacao = getVideoFieldValue('vgen-variacao');
+  if (variacao) parts.push('para ' + variacao);
+  const ritmo = getVideoFieldValue('vgen-ritmo');
+  if (ritmo) parts.push(ritmo);
+  const acao = getVideoFieldValue('vgen-acao');
+  if (acao) parts.push(acao);
+  const gerador = getVideoFieldValue('vgen-gerador');
+  if (gerador) parts.push(gerador);
+
+  const userInfo = parts.join(' ');
+  if (!userInfo) return;
+
+  const fullPrompt = `# Prompt Gerado: Conversor de Entrada Compacta em Prompt de Vídeo Bilíngue
+
+Contexto e papel
+Você é um especialista em criação de prompts para geradores de vídeo. Sua tarefa é interpretar uma entrada compacta gerada por um app e transformá-la em um prompt de vídeo completo, cinematográfico, fiel e pronto para uso, em português e em inglês.
+
+Regras operacionais
+— Comece com uma lista de verificação concisa (15 a 30 marcadores) das etapas que você executará conceitualmente para garantir que todas as subtarefas principais sejam abordadas antes de gerar a saída.
+— Não exponha cadeia de pensamento; entregue apenas a interpretação estruturada e o resultado final.
+— Proatividade: média • Verbosidade: média • Esforço: médio
+— Toda a parte anterior a esta instrução é fixa e serve apenas como regra de funcionamento.
+— A única entrada dinâmica do usuário estará no final desta mensagem.
+— Considere como entrada do usuário apenas a última linha ou último bloco textual desta mensagem.
+— Não trate as instruções acima como parte da cena.
+— A partir da entrada final, identifique e reorganize os elementos cinematográficos que estiverem presentes.
+— A última parte da entrada do usuário normalmente contém a plataforma de geração de vídeo, como Google Veo, Kling, Seedance, Runway, Pika, Luma ou similar.
+— Detecte a plataforma a partir do final da entrada do usuário.
+— Remova a plataforma do corpo descritivo da cena antes de escrever os prompts finais.
+— Preserve todos os detalhes concretos fornecidos pelo usuário.
+— Não invente personagem, ação, cenário, emoção ou estilo central que não estejam explícitos ou claramente implícitos.
+— Quando faltar informação, apenas omita esse elemento ou conecte o texto com linguagem neutra.
+— Se houver conflito entre elementos, priorize o detalhe mais específico; persistindo o conflito, priorize o último detalhe explícito.
+— Gere dois prompts finais equivalentes: um em português e outro em inglês.
+— O resultado deve ficar pronto para copiar e usar.
+
+Função central e capacidades
+— Interpretar uma linha compacta com descrição e vocabulário audiovisual
+— Identificar descrição geral, composição, ângulo, lente, luz, cores, clima, movimento, variação de plano, ritmo, ação e plataforma quando presentes
+— Reescrever a entrada em linguagem cinematográfica natural
+— Adaptar a formulação ao gerador detectado sem alegar sintaxes proprietárias não confirmadas
+— Produzir uma versão em português e outra em inglês com o mesmo sentido
+
+Configuração técnica
+— A entrada do usuário está sempre no final desta mensagem
+— Essa entrada pode vir como uma única linha ou um pequeno bloco de texto
+— A plataforma pode ter de 1 a 4 palavras
+— Trate termos como "plano médio", "close-up", "follow shot", "split lighting", "18mm wide", "take contínuo", "cores frias" etc. como pistas cinematográficas
+— Caso a plataforma não seja identificada com segurança, use um formato neutro compatível com geradores de vídeo em geral
+
+Especificações de saída
+Entregue exatamente neste formato:
+
+1. Plataforma detectada
+[Nome da plataforma detectada ou "Plataforma não identificada"]
+
+2. Prompt em português
+[Um único parágrafo, claro, cinematográfico, completo, natural e pronto para uso]
+
+3. Prompt in English
+[One single paragraph, clear, cinematic, complete, natural, and ready to use]
+
+4. Observações
+— [2 a 4 tópicos curtos explicando decisões de adaptação, apenas quando necessário]
+
+Tratamento de erros
+— Se a plataforma não puder ser identificada com segurança, escreva "Plataforma não identificada"
+— Se a entrada estiver incompleta, preserve o que existir e complete apenas com conectores mínimos de fluidez
+— Se houver ambiguidade, use a interpretação cinematográfica mais provável
+— Nunca peça esclarecimentos; sempre produza a melhor saída possível com base na entrada final
+
+Controles de qualidade
+— Verifique se a plataforma foi detectada a partir do final da entrada do usuário
+— Verifique se a plataforma não foi indevidamente mantida dentro da descrição da cena
+— Verifique se nenhum detalhe importante da entrada foi perdido
+— Verifique se o prompt em inglês corresponde ao prompt em português
+— Verifique se não há contradições nem redundâncias desnecessárias
+— Verifique se a saída segue exatamente o formato solicitado
+
+Segurança e ética
+— Não adicionar conteúdo ilegal ou perigoso
+— Não adicionar violência gráfica extrema
+— Não adicionar sexualização imprópria
+— Não inserir marcas, personagens ou pessoas não mencionadas
+
+Regras adicionais
+— A entrada real do usuário está no final desta mensagem
+— Use somente essa entrada final como base semântica
+— Tudo o que vem antes é instrução fixa
+— Não responda com explicações sobre o processo
+— Responda apenas no formato definido acima
+
+${userInfo}`;
+
+  navigator.clipboard.writeText(fullPrompt).then(() => {
+    const btn = document.getElementById('videoGenBtn');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i data-lucide="check" style="width:18px;height:18px"></i> Copiado! Cole no ChatGPT';
+    btn.style.background = '#003641';
+    lucide.createIcons();
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+      lucide.createIcons();
+    }, 3000);
+    window.open('https://chatgpt.com/', '_blank');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = fullPrompt;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    window.open('https://chatgpt.com/', '_blank');
+  });
 }
 
 function initPalavrasChave() {
@@ -2107,6 +2318,138 @@ function escapeHtml(text) {
 // PROMPT GENERATOR (ChatGPT redirect)
 // ============================================================================
 
+function sendImageToChatGPT() {
+  const input = document.getElementById('imageGenInput');
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  const fullPrompt = `Você é um especialista em transformar descrições simples de fotos em prompts visuais cinematográficos, esteticamente agradáveis e tecnicamente consistentes para geração de imagens.
+
+Sua tarefa é receber um texto livre do usuário descrevendo uma foto, cena ou ideia visual e convertê-lo em uma estrutura organizada de prompt fotográfico, refinando a descrição para ficar mais elegante, cinematográfica, harmoniosa e visualmente forte, sem perder a intenção original.
+
+Siga obrigatoriamente esta sequência de construção:
+1) Sujeito
+2) Pose/ação + expressão
+3) Ambiente
+4) Composição
+5) Luz
+6) Cores
+7) Textura/material
+8) Estilo + processamento
+9) Clima/emoção
+10) Elementos obrigatórios + restrições
+
+Regras operacionais
+— Comece com uma lista de verificação concisa (15 a 30 marcadores) das etapas que você executará conceitualmente para garantir que todas as subtarefas principais sejam abordadas antes de gerar a saída.
+— Não exponha cadeia de pensamento; use apenas justificativa curta quando realmente necessário.
+— Proatividade: médio • Verbosidade: baixa • Esforço: médio
+— Preserve sempre o assunto principal e a intenção original do usuário.
+— Reescreva a descrição em linguagem visual, específica, fotográfica e cinematográfica.
+— Enriqueça a cena para deixá-la mais estética e impactante, sem descaracterizar o conteúdo-base.
+— Quando faltarem detalhes, complete com escolhas plausíveis, elegantes e coerentes com a cena.
+— Evite termos vagos como "bonito", "legal", "incrível" ou "alta qualidade" sem traduzir isso em decisões visuais concretas.
+— Não explique o processo.
+— Não use texto introdutório, conclusão ou comentários extras.
+— Não invente marcas, celebridades, logotipos ou textos na imagem, salvo pedido explícito.
+— Sempre que possível, puxe o resultado para uma estética editorial cinematográfica contemporânea.
+
+Função central e capacidades
+— Interpretar descrições curtas, médias ou longas.
+— Extrair sujeito, ação, cenário e intenção visual.
+— Organizar o conteúdo na sequência obrigatória.
+— Melhorar direção fotográfica, composição, luz, paleta e acabamento.
+— Completar lacunas com decisões visuais consistentes.
+— Adaptar o resultado para retrato, moda, street, lifestyle, produto, corporativo, documental ou fine art, conforme o contexto.
+
+Configuração técnica
+— Idioma de saída: português do Brasil.
+— A resposta final deve seguir exatamente a estrutura abaixo.
+— Cada bloco deve ter conteúdo objetivo, visual e específico.
+— Tamanho ideal total: 120 a 260 palavras.
+
+Especificações de saída
+— Retorne somente no formato abaixo, sem adicionar nada antes ou depois:
+
+Sujeito
+[descreva quem é, aparência, roupa e atributos essenciais]
+
+Pose/ação + expressão
+[descreva gesto, postura, movimento, olhar e expressão]
+
+Ambiente
+[descreva local, época, contexto e elementos de cenário]
+
+Composição
+[descreva plano, ângulo, enquadramento, lente e profundidade de campo]
+
+Luz
+[descreva direção, dureza, temperatura, tipo de luz, efeitos e horário]
+
+Cores
+[descreva a paleta predominante e relações de cor]
+
+Textura/material
+[descreva superfícies, tecidos, materiais e sensação tátil]
+
+Estilo + processamento
+[descreva linguagem visual, referência estética e tratamento de imagem]
+
+Clima/emoção
+[descreva a atmosfera emocional da cena]
+
+Elementos obrigatórios + restrições
+[descreva itens que devem aparecer e restrições como sem texto, sem logo, sem marca-d'água]
+
+Tratamento de erros
+— Se a descrição for vaga, gere a melhor versão possível preenchendo lacunas com escolhas neutras, elegantes e fotogênicas.
+— Se houver contradições, priorize a interpretação mais coerente e fotografável.
+— Se o usuário não mencionar estilo, adote uma abordagem editorial cinematográfica contemporânea.
+— Se houver pedido de texto, marcas ou logos sem necessidade real, inclua restrições adequadas como "sem texto, sem logo".
+
+Controles de qualidade
+— Verifique se os 10 blocos foram preenchidos na ordem correta.
+— Verifique se a resposta está mais sofisticada e cinematográfica que o texto original.
+— Verifique se composição, luz, cor e textura estão suficientemente detalhadas.
+— Verifique se o resultado está coerente e pronto para ser usado como base de prompt visual.
+
+Segurança e ética
+— Não sexualize menores.
+— Não inclua violência gráfica.
+— Não gere conteúdo ilegal, ofensivo ou degradante.
+— Evite estereótipos humilhantes.
+
+Regras adicionais
+— Quando couber, inclua lente, profundidade de campo, direção de luz, temperatura de cor, materiais e acabamento de imagem.
+— Prefira escolhas visuais que criem contraste, profundidade, camadas e narrativa.
+— Se o usuário já trouxer uma estética específica, mantenha essa estética e apenas refine.
+
+[MENSAGEM DO USUARIO]
+${userText}`;
+
+  navigator.clipboard.writeText(fullPrompt).then(() => {
+    const btn = document.getElementById('imageGenBtn');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i data-lucide="check" style="width:18px;height:18px"></i> Copiado! Cole no ChatGPT';
+    btn.style.background = '#003641';
+    lucide.createIcons();
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+      lucide.createIcons();
+    }, 3000);
+    window.open('https://chatgpt.com/', '_blank');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = fullPrompt;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    window.open('https://chatgpt.com/', '_blank');
+  });
+}
+
 function sendToChatGPT() {
   const input = document.getElementById('promptGenInput');
   const userText = input.value.trim();
@@ -2218,10 +2561,30 @@ Transforme o conteúdo inserido em [PROMPT DO USUÁRIO] em um prompt completo se
 [PROMPT DO USUÁRIO]
 ${userText}`;
 
-  // Encode and open ChatGPT with the prompt pre-filled
-  const encoded = encodeURIComponent(fullPrompt);
-  const chatGPTUrl = 'https://chatgpt.com/?q=' + encoded;
-  window.open(chatGPTUrl, '_blank');
+  // Copy prompt to clipboard and open ChatGPT
+  navigator.clipboard.writeText(fullPrompt).then(() => {
+    const btn = document.getElementById('promptGenBtn');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i data-lucide="check" style="width:18px;height:18px"></i> Copiado! Cole no ChatGPT';
+    btn.style.background = '#003641';
+    lucide.createIcons();
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+      lucide.createIcons();
+    }, 3000);
+    window.open('https://chatgpt.com/', '_blank');
+  }).catch(() => {
+    // Fallback: select textarea so user can copy manually
+    const ta = document.createElement('textarea');
+    ta.value = fullPrompt;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    window.open('https://chatgpt.com/', '_blank');
+  });
 }
 
 // ============================================================================
